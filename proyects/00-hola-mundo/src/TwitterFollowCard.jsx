@@ -1,5 +1,5 @@
 
-export function TwitterFollowCard ({userName, name, isFollowing}){
+export function TwitterFollowCard ({children ,formatUserName,userName='unknown',  isFollowing}){
     const imageSrc = `https://unavatar.io/${userName}`;
 
     return (
@@ -8,12 +8,12 @@ export function TwitterFollowCard ({userName, name, isFollowing}){
             <img className='tw-followCard-avatar ' alt="El avatar de la imangen" 
             src={imageSrc}/>
             <div className='tw-followCard-info'>
-                <strong className='tw-followCard-infoUserName'>{name}</strong>
-                <span>@{userName}</span>
+                <strong className='tw-followCard-infoUserName'>{children}</strong>
+                <span>{formatUserName(userName)}</span>
             </div>
         </header>
         <aside>
-            <button className='tw-followCard-button'>Follow</button>
+            <button className='tw-followCard-button'>Seguir</button>
         </aside>
     </article>
     )
