@@ -1,7 +1,6 @@
 import { Square } from "./square"
 
 export const Modal = ({ winner, resetGame }) => {
-    console.log('Modal', winner)
     if (winner == null ) return
     return (
         <section className="winner">

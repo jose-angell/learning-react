@@ -1,17 +1,16 @@
 import { useState } from 'react'
 import './App.css'
 import confetti from 'canvas-confetti'
-import {Square} from './components/square.jsx'
 import { TURN } from './constants.js'
 import { checkWinner } from './logic/board.js'
 import { Modal } from './components/modal.jsx'
+import { Turn } from './components/Turn.jsx'
+import { Board } from './components/Board.jsx'
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
   const [turn, setTurn] = useState(TURN.X)
   const [winner, setWinner] = useState(null) // null es para no hay ganador, false para empate
-
- 
 
   const checkEndGame = (boardToCheck) => {
     return boardToCheck.every((square) => square !== null)
@@ -44,21 +43,8 @@ function App() {
     <main className='board'>
       <h1>Tic tac toe</h1>
       <button onClick={resetGame}>Reiniciar juego</button>
-      <section className='game'>
-        {board.map((_, index) => {
-          return (
-            <Square key={index} 
-            index={index}
-            updateBoard={updateBoard}
-            >{board[index]}</Square>
-          )
-        })
-      }
-      </section>
-      <section className='turn'>
-        <Square isSelected={turn === TURN.X}>{TURN.X}</Square>
-        <Square isSelected={turn === TURN.O}>{TURN.O}</Square>
-      </section>
+      <Board board={board} updateBoard={updateBoard}/>
+      <Turn turn={turn}/>
       <Modal winner={winner} resetGame={resetGame} />
     </main>
   )
