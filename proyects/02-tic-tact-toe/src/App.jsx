@@ -2,24 +2,30 @@ import { useState } from 'react'
 import './App.css'
 import confetti from 'canvas-confetti'
 import { TURN } from './constants.js'
-import { checkWinner } from './logic/board.js'
+import { checkWinner, checkEndGame } from './logic/board.js'
 import { Modal } from './components/modal.jsx'
 import { Turn } from './components/Turn.jsx'
 import { Board } from './components/Board.jsx'
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null))
-  const [turn, setTurn] = useState(TURN.X)
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    // si no hay nada en el localStorage, inicializamos el tablero
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
+  })
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn')
+    return turnFromStorage ? turnFromStorage : TURN.X
+  })
   const [winner, setWinner] = useState(null) // null es para no hay ganador, false para empate
 
-  const checkEndGame = (boardToCheck) => {
-    return boardToCheck.every((square) => square !== null)
-  }
-
+ 
   const resetGame = () => {
     setBoard(Array(9).fill(null))
     setTurn(TURN.X)
     setWinner(null)
+    window.localStorage.removeItem('board')
+    window.localStorage.removeItem('turn')
   }
   const updateBoard = (index) => {
     // no actualizamos esta posicion si ya tiene un valor
@@ -31,6 +37,9 @@ function App() {
     //se cambia el turno
     const newTurn = turn === TURN.X ? TURN.O : TURN.X
     setTurn(newTurn)
+    //buarder  qui pardida
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', newTurn)
     const newWinner = checkWinner(newBoard)
     if(newWinner) {
       confetti()

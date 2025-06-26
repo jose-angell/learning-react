@@ -2,16 +2,11 @@ import { Square } from "./square"
 
 export const Modal = ({ winner, resetGame }) => {
     if (winner == null ) return
+    const winnerText = winner == false ? 'Empate' : 'Gano ' + winner;
     return (
         <section className="winner">
             <div className='text'>
-              <h2>
-                {
-                  winner === false
-                  ? 'Empate'
-                  : 'Gano ' + winner
-                }
-              </h2>
+              <h2>{winnerText}</h2>
               <header className='win'>
                 {winner && <Square>{winner}</Square>}
               </header>
