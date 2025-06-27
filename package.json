@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^17.1.2"
+    "standard": "^17.1.2",
+    "vite": "^4.5.0"
   },
   "eslintConfig": {
     "extends": "/node_modules/standard/eslintrc.json"
