@@ -6,9 +6,11 @@ export function App () {
 
     const [fact, setFact] = useState()
     useEffect(() => {
-        fetch(CAT_ENDPOINT_RANDOM_FACT)
-        .then(res => res.json())
-        .then(data => setFact(data.fact))
+        async function getRandomFact () {
+            const rest = await fetch(CAT_ENDPOINT_RANDOM_FACT)
+            const json = await  res.json()
+            setFact(data.fact)
+        }
     }, [])
     return (
         <main>
