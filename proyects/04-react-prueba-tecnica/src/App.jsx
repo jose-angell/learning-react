@@ -1,44 +1,21 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, use} from 'react';
 import './App.css'
 import {getRandonFact} from './services/facts.js';
+import {useCatImage} from './hooks/useCatImage.js';
+
 
 export function App () {
 
     const [fact, setFact] = useState()
-    const [imageUrl, setImageUrl] = useState();
-    
+    const {imageUrl} = useCatImage({fact});
 
     // para recuperar  la cita al cargar la app
     useEffect(() => {
-        getRandonFact().then(setFact)
-        //fetch(CAT_ENDPOINT_RANDOM_FACT)
-        //.then(res => res.json())
-        //.then(data => {
-         //   const {fact} = data
-         //   setFact(fact)
-           // const firsThreeWord = fact.split(' ', 3).join(' ');
-           // fetch(`https://cataas.com/cat/says/${firsThreeWord}?size=50&color=red&json=true`)
-           // .then(res => res.json())
-           // .then(response => {
-           //     const {url} = response;
-                //console.log(url);
-           //     setImageUrl(url);
-           // })
-            
-        //})
+        getRandonFact().then(newFact => setFact(newFact));
+        
     }, []);
-    // para recuperar la imagen al cambiar la cita
-    useEffect(() => {
-        if(!fact) return;
-        const firsThreeWord = fact.split(' ', 3).join(' ');
-        fetch(`https://cataas.com/cat/says/${firsThreeWord}?size=50&color=red&json=true`)
-        .then(res => res.json())
-        .then(response => {
-            const {url} = response;
-            //console.log(url);
-            setImageUrl(url);
-        })
-    }, [fact]);
+    
+    
     const handleClick = async () => {
         const newfact = await getRandonFact(); 
         setFact(newfact);
